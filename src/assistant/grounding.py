@@ -55,7 +55,12 @@ def render_grounded_answer(result: GroundedAnswer, evidence: list[RetrievedChunk
                 raise ValueError("Inline citation is not supported by the block markers")
             return ""
 
-        text = re.sub(r"(?i)(?:evidence markers?:\s*)?\[(\d+(?:\s*,\s*\d+)*)\]", remove_duplicate, block.text)
+        text = re.sub(
+            r"(?i)\s*evidence markers?:\s*(\d+(?:\s*,\s*\d+)*)\.?\s*$",
+            remove_duplicate,
+            block.text,
+        )
+        text = re.sub(r"(?i)(?:evidence markers?:\s*)?\[(\d+(?:\s*,\s*\d+)*)\]", remove_duplicate, text)
         if "[" in text or "]" in text:
             raise ValueError("Malformed inline citation")
         rendered.append(text.strip() + " " + "".join(f"[{marker}]" for marker in markers))

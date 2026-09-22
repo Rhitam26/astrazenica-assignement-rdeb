@@ -1,0 +1,1142 @@
+{
+  "run_id": "20260922T103643Z-2a1c111b",
+  "dataset_sha256": "04d7d0922bf72a2bcad0e744ba4dbf7a2d38084aaf438dc293a7b889b14b0dab",
+  "judge_model": "gpt-4.1",
+  "llm_model": "gpt-4o-mini",
+  "embedding_model": "text-embedding-3-large",
+  "prompt_sha256": "e24b6a19542a4bb4bdb2ebb64751eb5dbe309058ae702c513818edf74519167b",
+  "config": {
+    "llm_temperature": 0.0,
+    "retrieval_top_k": 5,
+    "retrieval_score_threshold": 0.0,
+    "agent_max_tool_calls": 4,
+    "history_turns": 6,
+    "history_token_budget": 6000
+  },
+  "records": [
+    {
+      "input": "What is RAG and which two standalone-LLM limitations does it address?",
+      "evaluation_question": "Define RAG and name the two limitations it addresses.",
+      "standalone_question": "What is RAG and which specific standalone-LLM limitations does it address?",
+      "answer": "The question lacks clarity on the specific limitations of standalone LLMs being referred to.",
+      "workflow": "clarify",
+      "abstained": false,
+      "expected": {
+        "message": "What is RAG and which two standalone-LLM limitations does it address?",
+        "evaluation_question": "Define RAG and name the two limitations it addresses.",
+        "routes": [
+          "simple_rag"
+        ],
+        "abstained": false,
+        "subjects": [],
+        "expected_output": "RAG retrieves external evidence before generation. It addresses a model's knowledge cutoff and hallucinations by grounding answers in retrieved sources.",
+        "gold_evidence": [
+          {
+            "content_hash": "bf97b4ddf7f977d2f4bbba1af58ce83789c550673ca2603e1b4c4736c31cde4c",
+            "doc_id": "rag_architecture_patterns",
+            "page_numbers": [
+              3
+            ]
+          }
+        ],
+        "retrieval_evaluation": true
+      },
+      "citations": [],
+      "checks": {
+        "route": false,
+        "abstention": true,
+        "resolved_subjects": true,
+        "search_budget": true,
+        "no_search_for_social_or_clarification": true,
+        "citations": true
+      },
+      "latency_ms": 3379,
+      "searches": [],
+      "generation_context": [],
+      "metrics": [
+        {
+          "name": "retrieval_precision_at_5",
+          "score": 0.0,
+          "threshold": 0.2,
+          "passed": false,
+          "relevant_retrieved": 0,
+          "relevant_total": 1
+        },
+        {
+          "name": "retrieval_recall_at_5",
+          "score": 0.0,
+          "threshold": 1.0,
+          "passed": false,
+          "relevant_retrieved": 0,
+          "relevant_total": 1
+        }
+      ],
+      "passed": false,
+      "scenario": "rag-definition",
+      "turn": 1
+    },
+    {
+      "input": "How does advanced RAG improve on naive RAG?",
+      "evaluation_question": "Compare naive and advanced RAG.",
+      "standalone_question": "What are the differences between advanced RAG and naive RAG?",
+      "answer": "The terms 'advanced RAG' and 'naive RAG' need clarification to provide a meaningful response.",
+      "workflow": "clarify",
+      "abstained": false,
+      "expected": {
+        "message": "How does advanced RAG improve on naive RAG?",
+        "evaluation_question": "Compare naive and advanced RAG.",
+        "routes": [
+          "simple_rag"
+        ],
+        "abstained": false,
+        "subjects": [],
+        "expected_output": "Naive RAG uses fixed chunks, one dense retriever, and top-k stuffing. Advanced RAG adds query transformation, hybrid retrieval, reranking, contextual compression, and structured orchestration to improve precision and context use.",
+        "gold_evidence": [
+          {
+            "content_hash": "8bd162a139684a28df1f3a4cb0a3d8a00e1c627eb45df2c7aa6eb37f15bd4175",
+            "doc_id": "rag_architecture_patterns",
+            "page_numbers": [
+              3
+            ]
+          }
+        ],
+        "retrieval_evaluation": true
+      },
+      "citations": [],
+      "checks": {
+        "route": false,
+        "abstention": true,
+        "resolved_subjects": true,
+        "search_budget": true,
+        "no_search_for_social_or_clarification": true,
+        "citations": true
+      },
+      "latency_ms": 1874,
+      "searches": [],
+      "generation_context": [],
+      "metrics": [
+        {
+          "name": "retrieval_precision_at_5",
+          "score": 0.0,
+          "threshold": 0.2,
+          "passed": false,
+          "relevant_retrieved": 0,
+          "relevant_total": 1
+        },
+        {
+          "name": "retrieval_recall_at_5",
+          "score": 0.0,
+          "threshold": 1.0,
+          "passed": false,
+          "relevant_retrieved": 0,
+          "relevant_total": 1
+        }
+      ],
+      "passed": false,
+      "scenario": "naive-advanced-rag",
+      "turn": 1
+    },
+    {
+      "input": "What are the trade-offs of fixed-size chunking?",
+      "evaluation_question": "Describe fixed-size chunking trade-offs.",
+      "standalone_question": "What are the trade-offs of fixed-size chunking in a specific context?",
+      "answer": "Please specify the context or system related to fixed-size chunking.",
+      "workflow": "clarify",
+      "abstained": false,
+      "expected": {
+        "message": "What are the trade-offs of fixed-size chunking?",
+        "evaluation_question": "Describe fixed-size chunking trade-offs.",
+        "routes": [
+          "simple_rag"
+        ],
+        "abstained": false,
+        "subjects": [],
+        "expected_output": "Fixed-size chunking is deterministic, fast, and predictable, but ignores semantic structure, can split sentences or concepts, and requires overlap tuning. The reference recommends 256-512 tokens for dense QA tasks.",
+        "gold_evidence": [
+          {
+            "content_hash": "54cada4dc5ecd78c7b3b6504af42f59d724f1ed3fa2cc9ede7f6ee682fad176a",
+            "doc_id": "rag_architecture_patterns",
+            "page_numbers": [
+              3
+            ]
+          }
+        ],
+        "retrieval_evaluation": true
+      },
+      "citations": [],
+      "checks": {
+        "route": false,
+        "abstention": true,
+        "resolved_subjects": true,
+        "search_budget": true,
+        "no_search_for_social_or_clarification": true,
+        "citations": true
+      },
+      "latency_ms": 1461,
+      "searches": [],
+      "generation_context": [],
+      "metrics": [
+        {
+          "name": "retrieval_precision_at_5",
+          "score": 0.0,
+          "threshold": 0.2,
+          "passed": false,
+          "relevant_retrieved": 0,
+          "relevant_total": 1
+        },
+        {
+          "name": "retrieval_recall_at_5",
+          "score": 0.0,
+          "threshold": 1.0,
+          "passed": false,
+          "relevant_retrieved": 0,
+          "relevant_total": 1
+        }
+      ],
+      "passed": false,
+      "scenario": "fixed-chunking",
+      "turn": 1
+    },
+    {
+      "input": "How does semantic chunking work and what is its main cost?",
+      "evaluation_question": "Explain semantic chunking and its cost.",
+      "standalone_question": "How does semantic chunking work and what is its main cost?",
+      "answer": "Semantic chunking works by embedding every sentence independently and then calculating the cosine similarity between adjacent sentence embeddings. A chunk boundary is inserted wherever the similarity drops below a certain threshold, typically between 0.7 and 0.8, indicating a transition in topics. This method allows for the creation of chunks that align with topical units, enhancing semantic coherence and improving retrieval precision by approximately 12%. [1][3]\n\nThe main cost of semantic chunking is its slower index speed, which can be 2 to 5 times slower compared to other chunking strategies. Additionally, it has low chunk consistency and may ignore semantic structure, leading to potential splits mid-sentence or mid-concept. This requires careful tuning of overlap between chunks to maintain coherence, with recommended sizes ranging from 256-1024 tokens depending on the task. [2][4]",
+      "workflow": "simple_rag",
+      "abstained": false,
+      "expected": {
+        "message": "How does semantic chunking work and what is its main cost?",
+        "evaluation_question": "Explain semantic chunking and its cost.",
+        "routes": [
+          "simple_rag"
+        ],
+        "abstained": false,
+        "subjects": [],
+        "expected_output": "Semantic chunking embeds sentences and starts new chunks where adjacent-sentence similarity drops. It produces coherent topical units and can improve precision, but needs an embedding per sentence, threshold calibration, and yields inconsistent sizes.",
+        "gold_evidence": [
+          {
+            "content_hash": "70a62edb8a300d186ddbc82acd4ae34c82d8e9b72a11c12b060ac32f9205ac12",
+            "doc_id": "rag_architecture_patterns",
+            "page_numbers": [
+              4
+            ]
+          }
+        ],
+        "retrieval_evaluation": true
+      },
+      "citations": [
+        {
+          "marker": 1,
+          "chunk_id": "4edd57a8-705c-4aca-9a70-57cb66633f07",
+          "doc_id": "rag_architecture_patterns",
+          "doc_title": "rag architecture patterns",
+          "source_path": "pdfs/rag_architecture_patterns.pdf",
+          "heading_path": [
+            "2.3 Semantic Chunking"
+          ],
+          "page_numbers": [
+            4
+          ],
+          "page_start": 4,
+          "page_end": 4,
+          "chapter_title": "2.3 Semantic Chunking",
+          "section_title": null,
+          "subsection_title": null,
+          "content_type": "text",
+          "table_id": null,
+          "score": 0.6315487363756024,
+          "text_preview": "2.3 Semantic Chunking Embed every sentence independently, then compute cosine similarity between adjacent sentence embeddings. Insert a chunk boundary wherever similarity drops below a threshold (typically 0.7-0.8), signalling a topic transition."
+        },
+        {
+          "marker": 2,
+          "chunk_id": "bfe20742-8ee1-46ea-bd37-a7e7cdd8bf61",
+          "doc_id": "rag_architecture_patterns",
+          "doc_title": "rag architecture patterns",
+          "source_path": "pdfs/rag_architecture_patterns.pdf",
+          "heading_path": [
+            "2.5 Chunking Strategy Comparison"
+          ],
+          "page_numbers": [
+            4
+          ],
+          "page_start": 4,
+          "page_end": 4,
+          "chapter_title": "2.5 Chunking Strategy Comparison",
+          "section_title": null,
+          "subsection_title": null,
+          "content_type": "table",
+          "table_id": "#/tables/2",
+          "score": 0.6025861143274699,
+          "text_preview": "2.5 Chunking Strategy Comparison Fixed-size, Retrieval Precision = Moderate. Fixed-size, Index Speed = Very fast. Fixed-size, Chunk Consistency = High. Fixed-size, Best For = Rapid prototyping. Sentence-based, Retrieval Precision = Good. Sentence-based, Index Speed = Fast. Sentence-based, Chunk Consistency = Moderate. Sentence-based, Best For = Factoid QA. Semantic, Retrieval Precision = High (+12…"
+        },
+        {
+          "marker": 3,
+          "chunk_id": "2640392d-72c2-4e65-a346-f483f5d931ce",
+          "doc_id": "rag_architecture_patterns",
+          "doc_title": "rag architecture patterns",
+          "source_path": "pdfs/rag_architecture_patterns.pdf",
+          "heading_path": [
+            "✓ PROS"
+          ],
+          "page_numbers": [
+            4
+          ],
+          "page_start": 4,
+          "page_end": 4,
+          "chapter_title": "✓ PROS",
+          "section_title": null,
+          "subsection_title": null,
+          "content_type": "text",
+          "table_id": null,
+          "score": 0.5846122164278806,
+          "text_preview": "✓ PROS - Highest semantic coherence · - Chunks align with topical units · - Improves retrieval precision by ~12% ·"
+        },
+        {
+          "marker": 4,
+          "chunk_id": "0d401514-a791-4640-8120-5ed543918e59",
+          "doc_id": "rag_architecture_patterns",
+          "doc_title": "rag architecture patterns",
+          "source_path": "pdfs/rag_architecture_patterns.pdf",
+          "heading_path": [
+            "✗ CONS"
+          ],
+          "page_numbers": [
+            3
+          ],
+          "page_start": 3,
+          "page_end": 3,
+          "chapter_title": "✗ CONS",
+          "section_title": null,
+          "subsection_title": null,
+          "content_type": "text",
+          "table_id": null,
+          "score": 0.5845948288794126,
+          "text_preview": "✗ CONS - Ignores semantic structure entirely · - Splits mid-sentence or mid-concept · - Requires careful overlap tuning · Recommended sizes: 256-512 tokens for dense QA tasks; 512-1024 tokens for document summarisation. Overlap: 10-15% of chunk size (e.g., 50 tokens for 512-token chunks). Benchmark studies show 512-token chunks with 50token overlap maximise retrieval recall on most English corpora…"
+        }
+      ],
+      "checks": {
+        "route": true,
+        "abstention": true,
+        "resolved_subjects": true,
+        "search_budget": true,
+        "no_search_for_social_or_clarification": true,
+        "citations": true
+      },
+      "latency_ms": 11128,
+      "searches": [
+        {
+          "query": "How does semantic chunking work and what is its main cost?",
+          "top_k": 5,
+          "filters": {},
+          "chunks": [
+            {
+              "chunk_id": "4edd57a8-705c-4aca-9a70-57cb66633f07",
+              "content_hash": "70a62edb8a300d186ddbc82acd4ae34c82d8e9b72a11c12b060ac32f9205ac12",
+              "doc_id": "rag_architecture_patterns",
+              "doc_title": "rag architecture patterns",
+              "source_path": "pdfs/rag_architecture_patterns.pdf",
+              "heading_path": [
+                "2.3 Semantic Chunking"
+              ],
+              "chapter_title": "2.3 Semantic Chunking",
+              "section_title": null,
+              "subsection_title": null,
+              "page_numbers": [
+                4
+              ],
+              "page_start": 4,
+              "page_end": 4,
+              "content_type": "text",
+              "table_id": null,
+              "chunk_index": 15,
+              "text": "2.3 Semantic Chunking\nEmbed every sentence independently, then compute cosine similarity between adjacent sentence embeddings. Insert a chunk boundary wherever similarity drops below a threshold (typically 0.7-0.8), signalling a topic transition.",
+              "score": 0.6315487363756024
+            },
+            {
+              "chunk_id": "bfe20742-8ee1-46ea-bd37-a7e7cdd8bf61",
+              "content_hash": "83191804d89763ac074bb9a3d9ba292c271d0ccc9de200aec41d47dc22d12adc",
+              "doc_id": "rag_architecture_patterns",
+              "doc_title": "rag architecture patterns",
+              "source_path": "pdfs/rag_architecture_patterns.pdf",
+              "heading_path": [
+                "2.5 Chunking Strategy Comparison"
+              ],
+              "chapter_title": "2.5 Chunking Strategy Comparison",
+              "section_title": null,
+              "subsection_title": null,
+              "page_numbers": [
+                4
+              ],
+              "page_start": 4,
+              "page_end": 4,
+              "content_type": "table",
+              "table_id": "#/tables/2",
+              "chunk_index": 21,
+              "text": "2.5 Chunking Strategy Comparison\nFixed-size, Retrieval Precision = Moderate. Fixed-size, Index Speed = Very fast. Fixed-size, Chunk Consistency = High. Fixed-size, Best For = Rapid prototyping. Sentence-based, Retrieval Precision = Good. Sentence-based, Index Speed = Fast. Sentence-based, Chunk Consistency = Moderate. Sentence-based, Best For = Factoid QA. Semantic, Retrieval Precision = High (+12%). Semantic, Index Speed = Slow (2-5×). Semantic, Chunk Consistency = Low. Semantic, Best For = Long-form docs. Recursive char, Retrieval Precision = Good. Recursive char, Index Speed = Fast. Recursive char, Chunk Consistency = Moderate. Recursive char, Best For = General purpose",
+              "score": 0.6025861143274699
+            },
+            {
+              "chunk_id": "2640392d-72c2-4e65-a346-f483f5d931ce",
+              "content_hash": "1ca89a0ef5b7013de1b5474145bc722f6ac214809f02d2ef38482fbdcd7e34b8",
+              "doc_id": "rag_architecture_patterns",
+              "doc_title": "rag architecture patterns",
+              "source_path": "pdfs/rag_architecture_patterns.pdf",
+              "heading_path": [
+                "✓ PROS"
+              ],
+              "chapter_title": "✓ PROS",
+              "section_title": null,
+              "subsection_title": null,
+              "page_numbers": [
+                4
+              ],
+              "page_start": 4,
+              "page_end": 4,
+              "content_type": "text",
+              "table_id": null,
+              "chunk_index": 16,
+              "text": "✓ PROS\n- Highest semantic coherence ·\n- Chunks align with topical units ·\n- Improves retrieval precision by ~12% ·",
+              "score": 0.5846122164278806
+            },
+            {
+              "chunk_id": "0d401514-a791-4640-8120-5ed543918e59",
+              "content_hash": "54cada4dc5ecd78c7b3b6504af42f59d724f1ed3fa2cc9ede7f6ee682fad176a",
+              "doc_id": "rag_architecture_patterns",
+              "doc_title": "rag architecture patterns",
+              "source_path": "pdfs/rag_architecture_patterns.pdf",
+              "heading_path": [
+                "✗ CONS"
+              ],
+              "chapter_title": "✗ CONS",
+              "section_title": null,
+              "subsection_title": null,
+              "page_numbers": [
+                3
+              ],
+              "page_start": 3,
+              "page_end": 3,
+              "content_type": "text",
+              "table_id": null,
+              "chunk_index": 11,
+              "text": "✗ CONS\n- Ignores semantic structure entirely ·\n- Splits mid-sentence or mid-concept ·\n- Requires careful overlap tuning ·\nRecommended sizes: 256-512 tokens for dense QA tasks; 512-1024 tokens for document summarisation. Overlap: 10-15% of chunk size (e.g., 50 tokens for 512-token chunks). Benchmark studies show 512-token chunks with 50token overlap maximise retrieval recall on most English corpora.",
+              "score": 0.5845948288794126
+            },
+            {
+              "chunk_id": "e63ce4cc-8b8b-41af-bdd2-40717ee3811a",
+              "content_hash": "0d85b6f9f56bf4615fc8afe74f3552e8ddc12cad7d1ac20cf2e25fcad6b8ffb9",
+              "doc_id": "rag_architecture_patterns",
+              "doc_title": "rag architecture patterns",
+              "source_path": "pdfs/rag_architecture_patterns.pdf",
+              "heading_path": [
+                "2   Document Chunking Strategies"
+              ],
+              "chapter_title": "2   Document Chunking Strategies",
+              "section_title": null,
+              "subsection_title": null,
+              "page_numbers": [
+                3
+              ],
+              "page_start": 3,
+              "page_end": 3,
+              "content_type": "text",
+              "table_id": null,
+              "chunk_index": 8,
+              "text": "2   Document Chunking Strategies\nChunking is the most impactful - and most under-appreciated - parameter in RAG system design. The chunk is the atomic unit of retrieval; its size and boundaries determine what context the model sees.",
+              "score": 0.5556466426212633
+            }
+          ]
+        }
+      ],
+      "generation_context": [
+        "2.3 Semantic Chunking\nEmbed every sentence independently, then compute cosine similarity between adjacent sentence embeddings. Insert a chunk boundary wherever similarity drops below a threshold (typically 0.7-0.8), signalling a topic transition.",
+        "2.5 Chunking Strategy Comparison\nFixed-size, Retrieval Precision = Moderate. Fixed-size, Index Speed = Very fast. Fixed-size, Chunk Consistency = High. Fixed-size, Best For = Rapid prototyping. Sentence-based, Retrieval Precision = Good. Sentence-based, Index Speed = Fast. Sentence-based, Chunk Consistency = Moderate. Sentence-based, Best For = Factoid QA. Semantic, Retrieval Precision = High (+12%). Semantic, Index Speed = Slow (2-5×). Semantic, Chunk Consistency = Low. Semantic, Best For = Long-form docs. Recursive char, Retrieval Precision = Good. Recursive char, Index Speed = Fast. Recursive char, Chunk Consistency = Moderate. Recursive char, Best For = General purpose",
+        "✓ PROS\n- Highest semantic coherence ·\n- Chunks align with topical units ·\n- Improves retrieval precision by ~12% ·",
+        "✗ CONS\n- Ignores semantic structure entirely ·\n- Splits mid-sentence or mid-concept ·\n- Requires careful overlap tuning ·\nRecommended sizes: 256-512 tokens for dense QA tasks; 512-1024 tokens for document summarisation. Overlap: 10-15% of chunk size (e.g., 50 tokens for 512-token chunks). Benchmark studies show 512-token chunks with 50token overlap maximise retrieval recall on most English corpora."
+      ],
+      "metrics": [
+        {
+          "name": "retrieval_precision_at_5",
+          "score": 0.2,
+          "threshold": 0.2,
+          "passed": true,
+          "relevant_retrieved": 1,
+          "relevant_total": 1
+        },
+        {
+          "name": "retrieval_recall_at_5",
+          "score": 1.0,
+          "threshold": 1.0,
+          "passed": true,
+          "relevant_retrieved": 1,
+          "relevant_total": 1
+        },
+        {
+          "name": "factual_correctness",
+          "passed": false,
+          "error_type": "TypeError"
+        },
+        {
+          "name": "answer_relevancy",
+          "score": 1.0,
+          "threshold": 0.7,
+          "passed": true,
+          "reason": "The score is 1.00 because the answer was fully relevant, directly addressing both what semantic chunking is and its associated cost. Great job staying focused and informative!"
+        },
+        {
+          "name": "faithfulness",
+          "score": 1.0,
+          "threshold": 0.8,
+          "passed": true,
+          "reason": "The score is 1.00 because there are no contradictions—great job staying true to the retrieval context!"
+        },
+        {
+          "name": "contextual_relevancy",
+          "score": 0.625,
+          "threshold": 0.5,
+          "passed": true,
+          "reason": "The score is 0.62 because while several statements directly explain semantic chunking and its cost (e.g., 'Semantic chunking has high retrieval precision (12% higher than other methods), slow index speed (2-5× slower), low chunk consistency'), much of the context discusses other chunking methods or technical recommendations not related to semantic chunking or its cost, as noted in the irrelevancy reasons."
+        }
+      ],
+      "passed": false,
+      "scenario": "semantic-chunking",
+      "turn": 1
+    },
+    {
+      "input": "Why is recursive character splitting a general RAG default?",
+      "evaluation_question": "Explain recursive character splitting as a RAG default.",
+      "standalone_question": "Why is recursive character splitting considered a general default in RAG?",
+      "answer": "The term 'RAG' needs clarification to understand the context of recursive character splitting.",
+      "workflow": "clarify",
+      "abstained": false,
+      "expected": {
+        "message": "Why is recursive character splitting a general RAG default?",
+        "evaluation_question": "Explain recursive character splitting as a RAG default.",
+        "routes": [
+          "simple_rag"
+        ],
+        "abstained": false,
+        "subjects": [],
+        "expected_output": "Recursive character splitting tries large structural separators before smaller ones, making it more robust than naive fixed splitting while preserving paragraph and sentence structure. It remains character-based and needs custom separators for Markdown or code.",
+        "gold_evidence": [
+          {
+            "content_hash": "f8827bdfff1946b3b1c4abf4ad4c05b3f6308428d5ca2bdcc6637c2375335f45",
+            "doc_id": "rag_architecture_patterns",
+            "page_numbers": [
+              4
+            ]
+          }
+        ],
+        "retrieval_evaluation": true
+      },
+      "citations": [],
+      "checks": {
+        "route": false,
+        "abstention": true,
+        "resolved_subjects": true,
+        "search_budget": true,
+        "no_search_for_social_or_clarification": true,
+        "citations": true
+      },
+      "latency_ms": 1450,
+      "searches": [],
+      "generation_context": [],
+      "metrics": [
+        {
+          "name": "retrieval_precision_at_5",
+          "score": 0.0,
+          "threshold": 0.2,
+          "passed": false,
+          "relevant_retrieved": 0,
+          "relevant_total": 1
+        },
+        {
+          "name": "retrieval_recall_at_5",
+          "score": 0.0,
+          "threshold": 1.0,
+          "passed": false,
+          "relevant_retrieved": 0,
+          "relevant_total": 1
+        }
+      ],
+      "passed": false,
+      "scenario": "recursive-chunking",
+      "turn": 1
+    },
+    {
+      "input": "When is BM25 particularly useful?",
+      "evaluation_question": "State when BM25 is useful.",
+      "standalone_question": "When is BM25 particularly useful in information retrieval or search contexts?",
+      "answer": "Which subject or comparison would you like me to explain?",
+      "workflow": "clarify",
+      "abstained": false,
+      "expected": {
+        "message": "When is BM25 particularly useful?",
+        "evaluation_question": "State when BM25 is useful.",
+        "routes": [
+          "simple_rag"
+        ],
+        "abstained": false,
+        "subjects": [],
+        "expected_output": "BM25 is a sparse probabilistic ranking method based on term frequency, inverse document frequency, and document-length normalization. It is especially useful for exact-match keywords, technical terms, model names, product codes, and acronyms.",
+        "gold_evidence": [
+          {
+            "content_hash": "9f9727f6cf76db49257f385837cb9d71f22ba779aa51ce9b2a735601c0208389",
+            "doc_id": "rag_architecture_patterns",
+            "page_numbers": [
+              5
+            ]
+          }
+        ],
+        "retrieval_evaluation": true
+      },
+      "citations": [],
+      "checks": {
+        "route": false,
+        "abstention": true,
+        "resolved_subjects": true,
+        "search_budget": true,
+        "no_search_for_social_or_clarification": true,
+        "citations": true
+      },
+      "latency_ms": 1165,
+      "searches": [],
+      "generation_context": [],
+      "metrics": [
+        {
+          "name": "retrieval_precision_at_5",
+          "score": 0.0,
+          "threshold": 0.2,
+          "passed": false,
+          "relevant_retrieved": 0,
+          "relevant_total": 1
+        },
+        {
+          "name": "retrieval_recall_at_5",
+          "score": 0.0,
+          "threshold": 1.0,
+          "passed": false,
+          "relevant_retrieved": 0,
+          "relevant_total": 1
+        }
+      ],
+      "passed": false,
+      "scenario": "bm25",
+      "turn": 1
+    },
+    {
+      "input": "Why use reciprocal rank fusion for hybrid search?",
+      "evaluation_question": "Explain why RRF is used in hybrid retrieval.",
+      "standalone_question": "Why is reciprocal rank fusion used for hybrid search?",
+      "answer": "Reciprocal Rank Fusion (RRF) is used for hybrid search because it effectively combines dense and sparse scores, particularly when these scores are not on the same scale. The RRF formula, RRF_score(d) = Σ 1 / (k + rank_i(d)), allows for a more nuanced integration of different ranking systems, which can lead to improved retrieval performance. In benchmarks, hybrid search utilizing RRF has shown to enhance NDCG@10 by 8-14% compared to dense-only retrieval methods. This improvement is significant as it combines the strengths of both dense and sparse retrieval techniques, resulting in higher recall and precision rates while maintaining reasonable latency. [1]",
+      "workflow": "simple_rag",
+      "abstained": false,
+      "expected": {
+        "message": "Why use reciprocal rank fusion for hybrid search?",
+        "evaluation_question": "Explain why RRF is used in hybrid retrieval.",
+        "routes": [
+          "simple_rag"
+        ],
+        "abstained": false,
+        "subjects": [],
+        "expected_output": "Hybrid retrieval combines dense and sparse signals. RRF is preferred when their scores are not comparable because it combines ranks rather than raw score scales; the reference uses k=60 and reports improved NDCG@10 over dense-only retrieval.",
+        "gold_evidence": [
+          {
+            "content_hash": "6396fe48eb1ec5fc69021db48feef9c5c170b98f63b8c87ac38de5c4af10904e",
+            "doc_id": "rag_architecture_patterns",
+            "page_numbers": [
+              5,
+              6
+            ]
+          }
+        ],
+        "retrieval_evaluation": true
+      },
+      "citations": [
+        {
+          "marker": 1,
+          "chunk_id": "ee611131-b909-46ed-9283-0959c433eb48",
+          "doc_id": "rag_architecture_patterns",
+          "doc_title": "rag architecture patterns",
+          "source_path": "pdfs/rag_architecture_patterns.pdf",
+          "heading_path": [
+            "4.3 Hybrid Search"
+          ],
+          "page_numbers": [
+            5,
+            6
+          ],
+          "page_start": 5,
+          "page_end": 6,
+          "chapter_title": "4.3 Hybrid Search",
+          "section_title": null,
+          "subsection_title": null,
+          "content_type": "table",
+          "table_id": "#/tables/4",
+          "score": 0.697768946569962,
+          "text_preview": "4.3 Hybrid Search Hybrid search combines dense and sparse scores via Reciprocal Rank Fusion (RRF) or weighted linear combination: RRF_score(d) = Σ 1 / (k + rank_i(d)) where k = 60 (empirically optimal) ``` Linear: score(d) = α · dense_score(d) + (1 - α) · sparse_score(d) α ∈ [0, 1] ``` RRF is preferred when scores are not on the same scale. A typical starting value for linear fusion is α = 0.7 (de…"
+        }
+      ],
+      "checks": {
+        "route": true,
+        "abstention": true,
+        "resolved_subjects": true,
+        "search_budget": true,
+        "no_search_for_social_or_clarification": true,
+        "citations": true
+      },
+      "latency_ms": 6709,
+      "searches": [
+        {
+          "query": "Why is reciprocal rank fusion used for hybrid search?",
+          "top_k": 5,
+          "filters": {},
+          "chunks": [
+            {
+              "chunk_id": "ee611131-b909-46ed-9283-0959c433eb48",
+              "content_hash": "6396fe48eb1ec5fc69021db48feef9c5c170b98f63b8c87ac38de5c4af10904e",
+              "doc_id": "rag_architecture_patterns",
+              "doc_title": "rag architecture patterns",
+              "source_path": "pdfs/rag_architecture_patterns.pdf",
+              "heading_path": [
+                "4.3 Hybrid Search"
+              ],
+              "chapter_title": "4.3 Hybrid Search",
+              "section_title": null,
+              "subsection_title": null,
+              "page_numbers": [
+                5,
+                6
+              ],
+              "page_start": 5,
+              "page_end": 6,
+              "content_type": "table",
+              "table_id": "#/tables/4",
+              "chunk_index": 31,
+              "text": "4.3 Hybrid Search\nHybrid search combines dense and sparse scores via Reciprocal Rank Fusion (RRF) or weighted linear combination:\nRRF_score(d) = Σ 1 / (k + rank_i(d)) where k = 60 (empirically optimal)\n```\nLinear: score(d) = α · dense_score(d) + (1 - α) · sparse_score(d) α ∈ [0, 1]\n```\nRRF is preferred when scores are not on the same scale. A typical starting value for linear fusion is α = 0.7 (denseheavy). In benchmarks on MS MARCO, hybrid search improves NDCG@10 by +8-14% over dense-only retrieval.\nDense only (HNSW), Recall@10 = 78-85%. Dense only (HNSW), Precision@5 = 62-70%. Dense only (HNSW), Latency (1M docs) = 1-3ms. Dense only (HNSW), Exact-match strength = Low. BM25 only, Recall@10 = 65-74%. BM25 only, Precision@5 = 55-65%. BM25 only, Latency (1M docs) = 5-10ms. BM25 only, Exact-match strength = High. Hybrid (RRF), Recall@10 = 84-91%. Hybrid (RRF), Precision@5 = 68-76%. Hybrid (RRF), Latency (1M docs) = 8-15ms. Hybrid (RRF), Exact-match strength = High",
+              "score": 0.697768946569962
+            },
+            {
+              "chunk_id": "4ad2a71a-60c9-4bc5-970d-cb88af3fb3d1",
+              "content_hash": "d84991d8978ef14acb454d9f5bcf556345985be8515b5a201a09e8d284354914",
+              "doc_id": "rag_architecture_patterns",
+              "doc_title": "rag architecture patterns",
+              "source_path": "pdfs/rag_architecture_patterns.pdf",
+              "heading_path": [
+                "5.3 Multi-Query Retrieval"
+              ],
+              "chapter_title": "5.3 Multi-Query Retrieval",
+              "section_title": null,
+              "subsection_title": null,
+              "page_numbers": [
+                6,
+                7
+              ],
+              "page_start": 6,
+              "page_end": 7,
+              "content_type": "text",
+              "table_id": null,
+              "chunk_index": 37,
+              "text": "5.3 Multi-Query Retrieval\n- Increases recall by 20-30% for ambiguous queries by covering multiple interpretations. ·\nGenerate N diverse query reformulations using an LLM (N = 3-5 is typical), retrieve topk chunks for each, then deduplicate and union the result sets before re-ranking.\n- Latency cost: N × retrieval latency (parallelisable). ·\n- Deduplication via chunk ID set union; re-rank the merged ~(N·k) candidates using a cross-encoder . ·",
+              "score": 0.4928018959545909
+            },
+            {
+              "chunk_id": "c9e6dd38-c4c3-4fdc-841f-a67ec98f6092",
+              "content_hash": "978db2926d20040a599745b1e24b20e0e47d8b9255c72efaeeb879f003c43b94",
+              "doc_id": "rag_architecture_patterns",
+              "doc_title": "rag architecture patterns",
+              "source_path": "pdfs/rag_architecture_patterns.pdf",
+              "heading_path": [
+                "Mean Reciprocal Rank (MRR)"
+              ],
+              "chapter_title": "Mean Reciprocal Rank (MRR)",
+              "section_title": null,
+              "subsection_title": null,
+              "page_numbers": [
+                8
+              ],
+              "page_start": 8,
+              "page_end": 8,
+              "content_type": "text",
+              "table_id": null,
+              "chunk_index": 49,
+              "text": "Mean Reciprocal Rank (MRR)\nAverage of the reciprocal rank of the first relevant result across queries:\nMRR = (1/|Q|) · Σ_q 1 / rank_q(first relevant)\nStandard benchmark: MRR@10 on MS MARCO. State-of-the-art dense retrieval: MRR@10 ≈ 0.37-0.41.",
+              "score": 0.4836222317654073
+            },
+            {
+              "chunk_id": "474bd323-1fdf-4581-925d-87196382558d",
+              "content_hash": "a779b8b57c51f4a44a36625dbca86c7eb8f1c277721caea9739a721ff4c0e366",
+              "doc_id": "rag_architecture_patterns",
+              "doc_title": "rag architecture patterns",
+              "source_path": "pdfs/rag_architecture_patterns.pdf",
+              "heading_path": [
+                "4.4 Re-Ranking with Cross-Encoders"
+              ],
+              "chapter_title": "4.4 Re-Ranking with Cross-Encoders",
+              "section_title": null,
+              "subsection_title": null,
+              "page_numbers": [
+                6
+              ],
+              "page_start": 6,
+              "page_end": 6,
+              "content_type": "text",
+              "table_id": null,
+              "chunk_index": 32,
+              "text": "4.4 Re-Ranking with Cross-Encoders\nWorkflow: Retrieve top-100 candidates via fast ANN/BM25, then re-rank with a cross-encoder to produce a refined top-10. Common models:\nBi-encoder retrieval (dense/sparse) is fast but imprecise - it scores query-document pairs independently. Crossencoders see both query and document jointly, enabling deep attention-based relevance scoring at the cost of O(N) forward passes.\n- cross-encoder/ms-marco-MiniLM-L-6-v2 : 22M params; 40ms for 100 pairs; NDCG@10 improvement: +6-12% over bi-encoder retrieval. ·\n- BAAI/bge-reranker-large : 335M params; best open-source option; BEIR NDCG@10 of 54.2. ·\n- cohere rerank-english-v3.0 : API-based; state-of-the-art BEIR scores; latency ~200ms per request (networkdependent). ·",
+              "score": 0.4681127090237033
+            },
+            {
+              "chunk_id": "1fe3456d-89c2-447c-a0e4-351b6b80699d",
+              "content_hash": "1c21d0148b418f36e6d324c9fea659bfb8f75212a5e0cecb681b5cd326d487f7",
+              "doc_id": "rag_architecture_patterns",
+              "doc_title": "rag architecture patterns",
+              "source_path": "pdfs/rag_architecture_patterns.pdf",
+              "heading_path": [
+                "4   Retrieval Methods"
+              ],
+              "chapter_title": "4   Retrieval Methods",
+              "section_title": null,
+              "subsection_title": null,
+              "page_numbers": [
+                5
+              ],
+              "page_start": 5,
+              "page_end": 5,
+              "content_type": "text",
+              "table_id": null,
+              "chunk_index": 28,
+              "text": "4   Retrieval Methods\nNo single retrieval strategy dominates across all domains. Production systems typically combine dense and sparse retrieval with downstream re-ranking to balance recall, precision, and latency.",
+              "score": 0.4451507818698497
+            }
+          ]
+        }
+      ],
+      "generation_context": [
+        "4.3 Hybrid Search\nHybrid search combines dense and sparse scores via Reciprocal Rank Fusion (RRF) or weighted linear combination:\nRRF_score(d) = Σ 1 / (k + rank_i(d)) where k = 60 (empirically optimal)\n```\nLinear: score(d) = α · dense_score(d) + (1 - α) · sparse_score(d) α ∈ [0, 1]\n```\nRRF is preferred when scores are not on the same scale. A typical starting value for linear fusion is α = 0.7 (denseheavy). In benchmarks on MS MARCO, hybrid search improves NDCG@10 by +8-14% over dense-only retrieval.\nDense only (HNSW), Recall@10 = 78-85%. Dense only (HNSW), Precision@5 = 62-70%. Dense only (HNSW), Latency (1M docs) = 1-3ms. Dense only (HNSW), Exact-match strength = Low. BM25 only, Recall@10 = 65-74%. BM25 only, Precision@5 = 55-65%. BM25 only, Latency (1M docs) = 5-10ms. BM25 only, Exact-match strength = High. Hybrid (RRF), Recall@10 = 84-91%. Hybrid (RRF), Precision@5 = 68-76%. Hybrid (RRF), Latency (1M docs) = 8-15ms. Hybrid (RRF), Exact-match strength = High"
+      ],
+      "metrics": [
+        {
+          "name": "retrieval_precision_at_5",
+          "score": 0.2,
+          "threshold": 0.2,
+          "passed": true,
+          "relevant_retrieved": 1,
+          "relevant_total": 1
+        },
+        {
+          "name": "retrieval_recall_at_5",
+          "score": 1.0,
+          "threshold": 1.0,
+          "passed": true,
+          "relevant_retrieved": 1,
+          "relevant_total": 1
+        },
+        {
+          "name": "factual_correctness",
+          "passed": false,
+          "error_type": "TypeError"
+        },
+        {
+          "name": "answer_relevancy",
+          "passed": false,
+          "error_type": "RetryError"
+        },
+        {
+          "name": "faithfulness",
+          "score": 1.0,
+          "threshold": 0.8,
+          "passed": true,
+          "reason": "The score is 1.00 because there are no contradictions—great job staying true to the retrieval context!"
+        },
+        {
+          "name": "contextual_relevancy",
+          "score": 0.3333333333333333,
+          "threshold": 0.5,
+          "passed": false,
+          "reason": "The score is 0.33 because, while there are several statements directly explaining RRF's use in hybrid retrieval (e.g., 'Hybrid search combines dense and sparse scores via Reciprocal Rank Fusion (RRF) or weighted linear combination.' and 'RRF is preferred when scores are not on the same scale.'), the majority of the retrieval context is irrelevant, focusing on unrelated metrics, models, and retrieval strategies, as highlighted in the irrelevancy reasons."
+        }
+      ],
+      "passed": false,
+      "scenario": "hybrid-rrf",
+      "turn": 1
+    },
+    {
+      "input": "What is the usual cross-encoder reranking workflow?",
+      "evaluation_question": "Describe cross-encoder reranking workflow.",
+      "standalone_question": "What is the usual cross-encoder reranking workflow?",
+      "answer": "The usual cross-encoder reranking workflow involves several key steps. First, a set of top candidates is retrieved using fast methods like Approximate Nearest Neighbors (ANN) or BM25, typically yielding around 100 candidates. Next, these candidates are re-ranked using a cross-encoder, which evaluates the query-document pairs jointly, allowing for more nuanced relevance scoring. This process results in a refined list of the top 10 candidates. Cross-encoders, while slower due to the need for multiple forward passes, significantly improve the ranking quality compared to bi-encoder methods, which score pairs independently. For instance, models like 'cross-encoder/ms-marco-MiniLM-L-6-v2' and 'BAAI/bge-reranker-large' have shown notable improvements in ranking metrics such as NDCG@10 over bi-encoder retrieval methods. [1]",
+      "workflow": "simple_rag",
+      "abstained": false,
+      "expected": {
+        "message": "What is the usual cross-encoder reranking workflow?",
+        "evaluation_question": "Describe cross-encoder reranking workflow.",
+        "routes": [
+          "simple_rag"
+        ],
+        "abstained": false,
+        "subjects": [],
+        "expected_output": "A fast ANN or BM25 stage first retrieves about 100 candidates, then a cross-encoder reranks them to a refined top 10. This improves ranking quality at additional latency cost.",
+        "gold_evidence": [
+          {
+            "content_hash": "a779b8b57c51f4a44a36625dbca86c7eb8f1c277721caea9739a721ff4c0e366",
+            "doc_id": "rag_architecture_patterns",
+            "page_numbers": [
+              6
+            ]
+          }
+        ],
+        "retrieval_evaluation": true
+      },
+      "citations": [
+        {
+          "marker": 1,
+          "chunk_id": "474bd323-1fdf-4581-925d-87196382558d",
+          "doc_id": "rag_architecture_patterns",
+          "doc_title": "rag architecture patterns",
+          "source_path": "pdfs/rag_architecture_patterns.pdf",
+          "heading_path": [
+            "4.4 Re-Ranking with Cross-Encoders"
+          ],
+          "page_numbers": [
+            6
+          ],
+          "page_start": 6,
+          "page_end": 6,
+          "chapter_title": "4.4 Re-Ranking with Cross-Encoders",
+          "section_title": null,
+          "subsection_title": null,
+          "content_type": "text",
+          "table_id": null,
+          "score": 0.7102345052079146,
+          "text_preview": "4.4 Re-Ranking with Cross-Encoders Workflow: Retrieve top-100 candidates via fast ANN/BM25, then re-rank with a cross-encoder to produce a refined top-10. Common models: Bi-encoder retrieval (dense/sparse) is fast but imprecise - it scores query-document pairs independently. Crossencoders see both query and document jointly, enabling deep attention-based relevance scoring at the cost of O(N) forwa…"
+        }
+      ],
+      "checks": {
+        "route": true,
+        "abstention": true,
+        "resolved_subjects": true,
+        "search_budget": true,
+        "no_search_for_social_or_clarification": true,
+        "citations": true
+      },
+      "latency_ms": 7229,
+      "searches": [
+        {
+          "query": "What is the usual cross-encoder reranking workflow?",
+          "top_k": 5,
+          "filters": {},
+          "chunks": [
+            {
+              "chunk_id": "474bd323-1fdf-4581-925d-87196382558d",
+              "content_hash": "a779b8b57c51f4a44a36625dbca86c7eb8f1c277721caea9739a721ff4c0e366",
+              "doc_id": "rag_architecture_patterns",
+              "doc_title": "rag architecture patterns",
+              "source_path": "pdfs/rag_architecture_patterns.pdf",
+              "heading_path": [
+                "4.4 Re-Ranking with Cross-Encoders"
+              ],
+              "chapter_title": "4.4 Re-Ranking with Cross-Encoders",
+              "section_title": null,
+              "subsection_title": null,
+              "page_numbers": [
+                6
+              ],
+              "page_start": 6,
+              "page_end": 6,
+              "content_type": "text",
+              "table_id": null,
+              "chunk_index": 32,
+              "text": "4.4 Re-Ranking with Cross-Encoders\nWorkflow: Retrieve top-100 candidates via fast ANN/BM25, then re-rank with a cross-encoder to produce a refined top-10. Common models:\nBi-encoder retrieval (dense/sparse) is fast but imprecise - it scores query-document pairs independently. Crossencoders see both query and document jointly, enabling deep attention-based relevance scoring at the cost of O(N) forward passes.\n- cross-encoder/ms-marco-MiniLM-L-6-v2 : 22M params; 40ms for 100 pairs; NDCG@10 improvement: +6-12% over bi-encoder retrieval. ·\n- BAAI/bge-reranker-large : 335M params; best open-source option; BEIR NDCG@10 of 54.2. ·\n- cohere rerank-english-v3.0 : API-based; state-of-the-art BEIR scores; latency ~200ms per request (networkdependent). ·",
+              "score": 0.7102345052079146
+            },
+            {
+              "chunk_id": "7ef20ff0-170b-4518-8e30-ed4797f28261",
+              "content_hash": "eaaacacd86c9f20dc976db89bd318ae17da34231844860395e46eddc6798e42c",
+              "doc_id": "rag_architecture_patterns",
+              "doc_title": "rag architecture patterns",
+              "source_path": "pdfs/rag_architecture_patterns.pdf",
+              "heading_path": [
+                "5.5 Contextual Compression"
+              ],
+              "chapter_title": "5.5 Contextual Compression",
+              "section_title": null,
+              "subsection_title": null,
+              "page_numbers": [
+                7
+              ],
+              "page_start": 7,
+              "page_end": 7,
+              "content_type": "text",
+              "table_id": null,
+              "chunk_index": 39,
+              "text": "5.5 Contextual Compression\n- LLM Extractor: Prompt the LLM to extract relevant sentences from each chunk. High quality but adds ~100200ms latency per chunk. ·\nRather than returning entire retrieved chunks, extract only the sentences or spans within each chunk that are relevant to the query. This maximises the information density of the context window.\n- Embeddings Filter: Re-embed each sentence in the chunk, retain only those with cosine similarity > threshold (0.75) to the query embedding. Faster (~10ms) but less nuanced. ·\n- Pipeline: Contextual compression is typically the last pre-generation step after retrieval and re-ranking. ·\nCombining Patterns: High-performing production RAG pipelines commonly stack: (1) Multi-query generation → (2)   Hybrid retrieval → (3)   Cross-encoder re-ranking → (4)   Contextual compression. Each step incrementally improves answer quality at increasing latency cost. Profile before enabling all layers.",
+              "score": 0.4697645139057469
+            },
+            {
+              "chunk_id": "4ad2a71a-60c9-4bc5-970d-cb88af3fb3d1",
+              "content_hash": "d84991d8978ef14acb454d9f5bcf556345985be8515b5a201a09e8d284354914",
+              "doc_id": "rag_architecture_patterns",
+              "doc_title": "rag architecture patterns",
+              "source_path": "pdfs/rag_architecture_patterns.pdf",
+              "heading_path": [
+                "5.3 Multi-Query Retrieval"
+              ],
+              "chapter_title": "5.3 Multi-Query Retrieval",
+              "section_title": null,
+              "subsection_title": null,
+              "page_numbers": [
+                6,
+                7
+              ],
+              "page_start": 6,
+              "page_end": 7,
+              "content_type": "text",
+              "table_id": null,
+              "chunk_index": 37,
+              "text": "5.3 Multi-Query Retrieval\n- Increases recall by 20-30% for ambiguous queries by covering multiple interpretations. ·\nGenerate N diverse query reformulations using an LLM (N = 3-5 is typical), retrieve topk chunks for each, then deduplicate and union the result sets before re-ranking.\n- Latency cost: N × retrieval latency (parallelisable). ·\n- Deduplication via chunk ID set union; re-rank the merged ~(N·k) candidates using a cross-encoder . ·",
+              "score": 0.46092366480137303
+            },
+            {
+              "chunk_id": "49d6a7aa-6971-47c2-81fa-45cf378a0e49",
+              "content_hash": "0e55eeb80e0b1ac8ea6400a29c377bf21021f80e1634b693c3cfe21d627c4585",
+              "doc_id": "rag_architecture_patterns",
+              "doc_title": "rag architecture patterns",
+              "source_path": "pdfs/rag_architecture_patterns.pdf",
+              "heading_path": [
+                "6.2 Online Query Pipeline"
+              ],
+              "chapter_title": "6.2 Online Query Pipeline",
+              "section_title": null,
+              "subsection_title": null,
+              "page_numbers": [
+                7
+              ],
+              "page_start": 7,
+              "page_end": 7,
+              "content_type": "text",
+              "table_id": null,
+              "chunk_index": 42,
+              "text": "6.2 Online Query Pipeline\n- Query Pre-processing: Safety checks (PII detection, prompt injection guard), language detection, query transformation (§5.1). 1.\nThe query pipeline handles real-time user requests:\n- Embedding: Embed the (transformed) query using the same model as indexing. Target <50ms for embedding API calls. 2.\n- Re-ranking: Apply cross-encoder or MMR to produce top-5 to top-10 final chunks. 4.\n- Retrieval: Execute ANN search + optional BM25. Apply metadata filters (see §6.3). Retrieve top-50 to top-100 candidates. 3.\n- Contextual Compression: Optionally extract relevant sub-spans. 5.\n- Generation: Call LLM API. Stream tokens to user if latency is critical. 7.\n- Prompt Assembly: Inject retrieved context + conversation history + system prompt into the LLM template. 6.\n- Post-processing: Citation extraction, groundedness check, PII redaction in output. 8.",
+              "score": 0.4289321336304277
+            },
+            {
+              "chunk_id": "ca328bd6-461a-45f0-9e83-da192aa82786",
+              "content_hash": "1dfc0b4474d92114a8c81061f2d3df0cb8ea81471107a9598752140417552d9c",
+              "doc_id": "rag_architecture_patterns",
+              "doc_title": "rag architecture patterns",
+              "source_path": "pdfs/rag_architecture_patterns.pdf",
+              "heading_path": [
+                "3   Embedding Models"
+              ],
+              "chapter_title": "3   Embedding Models",
+              "section_title": null,
+              "subsection_title": null,
+              "page_numbers": [
+                4
+              ],
+              "page_start": 4,
+              "page_end": 4,
+              "content_type": "text",
+              "table_id": null,
+              "chunk_index": 22,
+              "text": "3   Embedding Models\nThe embedding model maps both queries and document chunks to a shared vector space. Model selection determines the quality ceiling of retrieval - no amount of downstream re-ranking can recover from a weak embedding space.",
+              "score": 0.4259479577805221
+            }
+          ]
+        }
+      ],
+      "generation_context": [
+        "4.4 Re-Ranking with Cross-Encoders\nWorkflow: Retrieve top-100 candidates via fast ANN/BM25, then re-rank with a cross-encoder to produce a refined top-10. Common models:\nBi-encoder retrieval (dense/sparse) is fast but imprecise - it scores query-document pairs independently. Crossencoders see both query and document jointly, enabling deep attention-based relevance scoring at the cost of O(N) forward passes.\n- cross-encoder/ms-marco-MiniLM-L-6-v2 : 22M params; 40ms for 100 pairs; NDCG@10 improvement: +6-12% over bi-encoder retrieval. ·\n- BAAI/bge-reranker-large : 335M params; best open-source option; BEIR NDCG@10 of 54.2. ·\n- cohere rerank-english-v3.0 : API-based; state-of-the-art BEIR scores; latency ~200ms per request (networkdependent). ·",
+        "5.5 Contextual Compression\n- LLM Extractor: Prompt the LLM to extract relevant sentences from each chunk. High quality but adds ~100200ms latency per chunk. ·\nRather than returning entire retrieved chunks, extract only the sentences or spans within each chunk that are relevant to the query. This maximises the information density of the context window.\n- Embeddings Filter: Re-embed each sentence in the chunk, retain only those with cosine similarity > threshold (0.75) to the query embedding. Faster (~10ms) but less nuanced. ·\n- Pipeline: Contextual compression is typically the last pre-generation step after retrieval and re-ranking. ·\nCombining Patterns: High-performing production RAG pipelines commonly stack: (1) Multi-query generation → (2)   Hybrid retrieval → (3)   Cross-encoder re-ranking → (4)   Contextual compression. Each step incrementally improves answer quality at increasing latency cost. Profile before enabling all layers.",
+        "6.2 Online Query Pipeline\n- Query Pre-processing: Safety checks (PII detection, prompt injection guard), language detection, query transformation (§5.1). 1.\nThe query pipeline handles real-time user requests:\n- Embedding: Embed the (transformed) query using the same model as indexing. Target <50ms for embedding API calls. 2.\n- Re-ranking: Apply cross-encoder or MMR to produce top-5 to top-10 final chunks. 4.\n- Retrieval: Execute ANN search + optional BM25. Apply metadata filters (see §6.3). Retrieve top-50 to top-100 candidates. 3.\n- Contextual Compression: Optionally extract relevant sub-spans. 5.\n- Generation: Call LLM API. Stream tokens to user if latency is critical. 7.\n- Prompt Assembly: Inject retrieved context + conversation history + system prompt into the LLM template. 6.\n- Post-processing: Citation extraction, groundedness check, PII redaction in output. 8."
+      ],
+      "metrics": [
+        {
+          "name": "retrieval_precision_at_5",
+          "score": 0.2,
+          "threshold": 0.2,
+          "passed": true,
+          "relevant_retrieved": 1,
+          "relevant_total": 1
+        },
+        {
+          "name": "retrieval_recall_at_5",
+          "score": 1.0,
+          "threshold": 1.0,
+          "passed": true,
+          "relevant_retrieved": 1,
+          "relevant_total": 1
+        },
+        {
+          "name": "factual_correctness",
+          "passed": false,
+          "error_type": "TypeError"
+        },
+        {
+          "name": "answer_relevancy",
+          "score": 1.0,
+          "threshold": 0.7,
+          "passed": true,
+          "reason": "Great job! The answer is fully relevant and directly addresses the question about the cross-encoder reranking workflow without any irrelevant information."
+        },
+        {
+          "name": "faithfulness",
+          "score": 1.0,
+          "threshold": 0.8,
+          "passed": true,
+          "reason": "The score is 1.00 because there are no contradictions—great job staying true to the retrieval context!"
+        },
+        {
+          "name": "contextual_relevancy",
+          "score": 0.36,
+          "threshold": 0.5,
+          "passed": false,
+          "reason": "The score is 0.36 because, while there are several highly relevant statements such as 'Retrieve top-100 candidates via fast ANN/BM25, then re-rank with a cross-encoder to produce a refined top-10.' and 'Re-ranking applies cross-encoder or MMR to produce top-5 to top-10 final chunks.', the majority of the retrieval context discusses unrelated topics like contextual compression, embedding models, and pipeline steps not specific to cross-encoder reranking, as highlighted in the irrelevancy reasons."
+        }
+      ],
+      "passed": false,
+      "scenario": "reranking",
+      "turn": 1
+    }
+  ],
+  "corpus_sha256": "d1f76977d79a63b27b290864429c800341fa477619c031e7fb5eedc49455c0af",
+  "corpus_chunks": 146,
+  "summary": {
+    "turns": 8,
+    "passed": 0,
+    "latency_p50_ms": 1874,
+    "latency_p95_ms": 11128,
+    "metrics": {
+      "retrieval_precision_at_5": {
+        "count": 8,
+        "errors": 0,
+        "mean": 0.07500000000000001
+      },
+      "retrieval_recall_at_5": {
+        "count": 8,
+        "errors": 0,
+        "mean": 0.375
+      },
+      "factual_correctness": {
+        "count": 0,
+        "errors": 3,
+        "mean": null
+      },
+      "answer_relevancy": {
+        "count": 2,
+        "errors": 1,
+        "mean": 1.0
+      },
+      "faithfulness": {
+        "count": 3,
+        "errors": 0,
+        "mean": 1.0
+      },
+      "contextual_relevancy": {
+        "count": 3,
+        "errors": 0,
+        "mean": 0.43944444444444447
+      }
+    }
+  }
+}

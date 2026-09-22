@@ -1,0 +1,11 @@
+[
+  {"id":"architecture-extension","turns":[
+    {"message":"What retrieval architecture would you recommend for a production RAG application based on the corpus?","evaluation_question":"Recommend a production RAG retrieval architecture based on the corpus.","routes":["simple_rag","agentic_rag"],"abstained":false},
+    {"message":"Now add agentic layer for the complex questions, what Agentic frameworks would you recommend to answer them?","evaluation_question":"Which agentic frameworks does the corpus recommend for complex questions in the production RAG application previously discussed?","routes":["simple_rag","agentic_rag"],"abstained":false,"subjects":["RAG"],"expected_output":"LangGraph is suitable for production RAG agents with explicit state, conditional routing and checkpointing. LangChain suits prototyping; other frameworks may fit specialized needs. Explain the recommendation using the corpus."}
+  ]},
+  {"id":"comparison-selection-limitations","turns":[
+    {"message":"Compare pgvector and Pinecone for a production RAG system","evaluation_question":"Compare pgvector and Pinecone for production RAG.","routes":["agentic_rag"],"abstained":false},
+    {"message":"Which one gives me ACID guarantees?","evaluation_question":"Between pgvector and Pinecone, which provides ACID guarantees?","routes":["simple_rag","agentic_rag"],"abstained":false,"subjects":["pgvector","Pinecone"],"expected_output":"pgvector provides full ACID guarantees through PostgreSQL. The corpus describes Pinecone as eventually consistent rather than offering those ACID guarantees."},
+    {"message":"What are the main limitations of that option?","evaluation_question":"What are the main limitations of pgvector, selected for its ACID guarantees?","routes":["simple_rag","agentic_rag"],"abstained":false,"subjects":["pgvector"],"expected_output":"According to the vector database comparison, pgvector degrades beyond roughly five million vectors, has lower throughput than purpose-built vector databases, and the document warns that HNSW builds lock the table. Qualify these as corpus statements rather than universal measured limits."}
+  ]}
+]

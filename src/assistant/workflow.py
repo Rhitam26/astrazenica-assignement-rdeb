@@ -16,6 +16,7 @@ from langgraph.runtime import Runtime
 from src.assistant.grounding import ABSTENTION, build_citations, evidence_payload, render_grounded_answer
 from src.assistant.models import (
     Citation,
+    ContextRepairDecision,
     ContextRouteDecision,
     EvidenceDecision,
     GeneratedAnswer,
@@ -87,16 +88,36 @@ def assess_evidence(question: str, run: RunContext, settings: Settings, model: M
 def bounded_history(messages: list[BaseMessage], settings: Settings) -> list[dict[str, str]]:
     encoding = tiktoken.get_encoding("cl100k_base")
     remaining = settings.history_token_budget
-    result = []
-    for msg in reversed(messages[-settings.history_turns * 2 :]):
-        if msg.type not in ("human", "ai") or not isinstance(msg.content, str):
+    result: list[list[dict[str, str]]] = []
+    exchanges: list[list[BaseMessage]] = []
+    for msg in messages:
+        if not isinstance(msg.content, str):
             continue
-        tokens = encoding.encode(msg.content)
-        if len(tokens) > remaining:
+        if msg.type == "human":
+            exchanges.append([msg])
+        elif msg.type == "ai" and exchanges and len(exchanges[-1]) == 1:
+            exchanges[-1].append(msg)
+    for exchange in reversed(exchanges[-settings.history_turns :]):
+        if remaining < len(exchange):
             break
-        result.append({"role": msg.type, "content": msg.content})
-        remaining -= len(tokens)
-    return list(reversed(result))
+        selected = []
+        for index, msg in enumerate(exchange):
+            assert isinstance(msg.content, str)
+            content = msg.content
+            resolved = msg.additional_kwargs.get("resolved_question")
+            if resolved:
+                content += "\n[Previously resolved question]: " + str(resolved)
+            saved = msg.additional_kwargs.get("saved_answer", {})
+            if saved:
+                content += (
+                    f"\n[Response outcome]: {saved.get('workflow')}; abstained={saved.get('abstained')}"
+                )
+            tokens = encoding.encode(content)
+            allowance = remaining if index or len(exchange) == 1 else max(1, remaining // 2)
+            selected.append({"role": msg.type, "content": encoding.decode(tokens[:allowance])})
+            remaining -= min(len(tokens), allowance)
+        result.insert(0, selected)
+    return [message for exchange in result for message in exchange]
 
 
 def create_graph(
@@ -136,6 +157,41 @@ def create_graph(
             )
         if not result.standalone_question.strip():
             raise ValueError("Empty contextualized question")
+        initial_route = result.route
+        recovery_used = bool(history and (result.unresolved or result.route == "clarify"))
+        if recovery_used:
+            try:
+                repaired = model.structured(
+                    "context_repair",
+                    {"history": history, "latest_message": latest, "initial_decision": result.model_dump()},
+                    ContextRepairDecision,
+                )
+            except Exception as exc:
+                logger.warning("context_repair_failed", extra={"error_type": type(exc).__name__})
+                repaired = ContextRepairDecision(**result.model_dump(), supporting_quotes=[])
+            # Reject fabricated quotes; semantic resolution remains the model's responsibility.
+            sources = [item["content"] for item in history] + [latest]
+            supported = bool(repaired.supporting_quotes) and all(
+                quote.strip() and any(quote in source for source in sources)
+                for quote in repaired.supporting_quotes
+            )
+            if supported and repaired.standalone_question.strip() and not repaired.unresolved:
+                result = repaired
+        with telemetry.observation(
+            "workflow.context-resolution",
+            metadata={
+                "history_messages": len(history),
+                "stored_messages": len(state.get("messages", [])),
+                "history_tokens": sum(
+                    len(tiktoken.get_encoding("cl100k_base").encode(m["content"])) for m in history
+                ),
+                "initial_route": initial_route,
+                "recovery_used": recovery_used,
+                "final_route": result.route,
+                "resolved_question": preview(result.standalone_question, settings.langfuse_preview_chars),
+            },
+        ):
+            pass
         return {
             "standalone_question": result.standalone_question,
             "unresolved": result.unresolved,
@@ -329,7 +385,10 @@ def create_graph(
         # Only visible messages persist; no tool transcripts or large evidence blobs.
         return {
             "messages": [
-                HumanMessage(state["user_message"]),
+                HumanMessage(
+                    state["user_message"],
+                    additional_kwargs={"resolved_question": state["standalone_question"]},
+                ),
                 AIMessage(
                     state["answer"],
                     additional_kwargs={

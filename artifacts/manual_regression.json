@@ -1,0 +1,200 @@
+[
+  {
+    "scenario": "A",
+    "status": 200,
+    "response": {
+      "conversation_id": "d14d48f9-f495-4442-88c4-0d0c8e9e3ec6",
+      "answer": "HNSW (Hierarchical Navigable Small World) is a graph-based algorithm known for its excellent recall and speed tradeoff, achieving O(log N) query time. It typically provides 95-99% recall at 10 nearest neighbors with a latency of about 1 millisecond for 1 million vectors. However, it has high memory usage, with parameters such as M (connections) typically set between 16-32, and ef (query) starting at 50-100 for tuning recall performance. HNSW is implemented in various systems like FAISS, Qdrant, and Weaviate. [1][2][3]\n\nIVF (Inverted File) is a cluster-based algorithm that probes the nearest clusters, making it more memory-efficient compared to HNSW. It is particularly suitable for large-scale datasets, allowing for a significant reduction in memory usage, with vector sizes ranging from 64-256 bytes compared to 4KB for float32 1024-dimensional vectors. IVF can be combined with Product Quantization (PQ) to further enhance memory efficiency, although this may result in some loss of recall. [2][3]",
+      "workflow": "simple_rag",
+      "route_reason": "The question asks for a focused explanation of two related terms, HNSW and IVF, which fits the criteria for simple_rag.",
+      "citations": [
+        {
+          "marker": 1,
+          "chunk_id": "1e88b6ce-a5b3-4077-b8cc-db2e40d29beb",
+          "doc_id": "vector_database_comparison",
+          "doc_title": "vector database comparison",
+          "source_path": "pdfs/vector_database_comparison.pdf",
+          "heading_path": [
+            "HNSW Parameters"
+          ],
+          "page_numbers": [
+            7
+          ],
+          "page_start": 7,
+          "page_end": 7,
+          "chapter_title": "HNSW Parameters",
+          "section_title": null,
+          "subsection_title": null,
+          "content_type": "text",
+          "table_id": null,
+          "score": 0.3271707478070245
+        },
+        {
+          "marker": 2,
+          "chunk_id": "373cd7e5-5005-44b0-b9fd-ef14abe31327",
+          "doc_id": "vector_database_comparison",
+          "doc_title": "vector database comparison",
+          "source_path": "pdfs/vector_database_comparison.pdf",
+          "heading_path": [
+            "ANN Algorithms"
+          ],
+          "page_numbers": [
+            2
+          ],
+          "page_start": 2,
+          "page_end": 2,
+          "chapter_title": "ANN Algorithms",
+          "section_title": null,
+          "subsection_title": null,
+          "content_type": "text",
+          "table_id": null,
+          "score": 0.3268714902319947
+        },
+        {
+          "marker": 3,
+          "chunk_id": "373258c1-29ee-471b-be55-2e298fda0dcd",
+          "doc_id": "rag_architecture_patterns",
+          "doc_title": "rag architecture patterns",
+          "source_path": "pdfs/rag_architecture_patterns.pdf",
+          "heading_path": [
+            "4.1 Dense Retrieval (ANN Search)"
+          ],
+          "page_numbers": [
+            5
+          ],
+          "page_start": 5,
+          "page_end": 5,
+          "chapter_title": "4.1 Dense Retrieval (ANN Search)",
+          "section_title": null,
+          "subsection_title": null,
+          "content_type": "text",
+          "table_id": null,
+          "score": 0.2514569951771377
+        }
+      ],
+      "abstained": false,
+      "latency_ms": 19506
+    }
+  },
+  {
+    "scenario": "B",
+    "status": 200,
+    "response": {
+      "conversation_id": "d14d48f9-f495-4442-88c4-0d0c8e9e3ec6",
+      "answer": "I could not find sufficient information in the supplied knowledge base to answer that question.",
+      "workflow": "simple_rag",
+      "route_reason": "The question asks for focused definitions and explanations of two related terms, HNSW and IVF, along with simple examples.",
+      "citations": [],
+      "abstained": true,
+      "latency_ms": 15217
+    }
+  },
+  {
+    "scenario": "C1",
+    "status": 200,
+    "response": {
+      "conversation_id": "11600443-3dcf-47f6-9f92-c8f2c30e9736",
+      "answer": "I could not find sufficient information in the supplied knowledge base to answer that question.",
+      "workflow": "agentic_rag",
+      "route_reason": "The question asks for a comparison between two technologies, pgvector and Pinecone, which involves multiple criteria and independent information needs.",
+      "citations": [],
+      "abstained": true,
+      "latency_ms": 21466
+    }
+  },
+  {
+    "scenario": "C2",
+    "status": 200,
+    "response": {
+      "conversation_id": "11600443-3dcf-47f6-9f92-c8f2c30e9736",
+      "answer": "pgvector provides full ACID guarantees, while Pinecone does not offer ACID compliance, as it is described as having eventual consistency instead. [1][2]",
+      "workflow": "agentic_rag",
+      "route_reason": "The question compares two technologies (pgvector and Pinecone) based on a specific criterion (ACID guarantees), requiring a synthesis of information about both.",
+      "citations": [
+        {
+          "marker": 1,
+          "chunk_id": "ec18af7b-b2ff-4f44-93ab-7d46afd2f8b2",
+          "doc_id": "vector_database_comparison",
+          "doc_title": "vector database comparison",
+          "source_path": "pdfs/vector_database_comparison.pdf",
+          "heading_path": [
+            "STRENGTHS"
+          ],
+          "page_numbers": [
+            4
+          ],
+          "page_start": 4,
+          "page_end": 4,
+          "chapter_title": "STRENGTHS",
+          "section_title": null,
+          "subsection_title": null,
+          "content_type": "text",
+          "table_id": null,
+          "score": 0.5145093735004941
+        },
+        {
+          "marker": 2,
+          "chunk_id": "b86eb87a-2b30-4589-b562-86bd1cd082b1",
+          "doc_id": "vector_database_comparison",
+          "doc_title": "vector database comparison",
+          "source_path": "pdfs/vector_database_comparison.pdf",
+          "heading_path": [
+            "Head-to-Head Comparison Matrix"
+          ],
+          "page_numbers": [
+            4
+          ],
+          "page_start": 4,
+          "page_end": 4,
+          "chapter_title": "Head-to-Head Comparison Matrix",
+          "section_title": null,
+          "subsection_title": null,
+          "content_type": "table",
+          "table_id": "#/tables/5",
+          "score": 0.4606838874184259
+        }
+      ],
+      "abstained": false,
+      "latency_ms": 8491
+    }
+  },
+  {
+    "scenario": "D",
+    "status": 200,
+    "response": {
+      "conversation_id": "91174108-6675-46ec-8f20-7a84b0f280b5",
+      "answer": "I could not find sufficient information in the supplied knowledge base to answer that question.",
+      "workflow": "agentic_rag",
+      "route_reason": "The question requires a comparison across multiple technologies (pgvector, Pinecone, Weaviate) based on several criteria (cost, hybrid search, operations, scalability).",
+      "citations": [],
+      "abstained": true,
+      "latency_ms": 19261
+    }
+  },
+  {
+    "scenario": "E",
+    "status": 200,
+    "response": {
+      "conversation_id": "7d8d8f55-7d9d-4c2f-a9f9-844981955687",
+      "answer": "No specific comparison set provided for recommendations.",
+      "workflow": "clarify",
+      "route_reason": "The reference needs clarification.",
+      "citations": [],
+      "abstained": false,
+      "latency_ms": 1002
+    }
+  },
+  {
+    "scenario": "F",
+    "status": 200,
+    "response": {
+      "conversation_id": "52ea66e1-3df8-47c2-8873-b615ba786ae9",
+      "answer": "Which subject or technologies are you referring to?",
+      "workflow": "clarify",
+      "route_reason": "The reference needs clarification.",
+      "citations": [],
+      "abstained": false,
+      "latency_ms": 20
+    }
+  }
+]

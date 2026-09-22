@@ -56,6 +56,12 @@ Every turn additionally checks allowed route, expected abstention, required subj
 
 ## Reports and interpretation
 
+Multi-turn quality regressions are available separately in `evals/multiturn_cases.json`:
+`python -m scripts.evaluate_rag --dataset evals/multiturn_cases.json --live`.
+These exercise production-RAG architecture extension and comparison → ACID selection →
+selected-option limitations through the real model. Schema validation without `--live`
+does not measure model quality. No paid run is implied by passing mocked tests.
+
 Each live run writes `artifacts/evals/<UTC timestamp>-<suffix>/results.json`, including dataset/prompt/corpus fingerprints, configuration, reference answer and gold evidence labels, ordered searches and chunks, answer, citations, deterministic checks, metric scores/reasons, and p50/p95 graph latency. Results are saved after each turn.
 
 Treat a failing deterministic check or retrieval metric as a regression. For judge metrics, inspect the answer, reference, retrieved chunks, and judge reason before changing prompts or thresholds. Compare only runs that use the same dataset version, corpus fingerprint, application model, judge model, and retrieval configuration. Run paid evaluations outside ordinary CI; unit tests validate the benchmark schema and scoring logic without provider calls.

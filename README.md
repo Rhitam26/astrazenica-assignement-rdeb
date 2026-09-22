@@ -82,6 +82,13 @@ Citation markers map only to actual retrieved chunks. Filenames, page lists/rang
 
 ### Conversation persistence
 
+Follow-up resolution uses bounded conversation exchanges and saved resolved questions.
+Long assistant replies are truncated while retaining their user question. A clarification
+decision with retained history receives one context-repair attempt with quoted contextual
+anchors; genuinely ambiguous references still require clarification. Normal successful
+turns retain the single combined context/routing call. The additional call occurs only
+on this recovery path. Old saved conversations remain supported without migration.
+
 The Streamlit **Conversations** sidebar lists saved chats, newest activity first. Select a title to restore its messages and continue the same thread. **New conversation** opens a blank chat without deleting the previous one; **Refresh** reloads the list, and **Load more** pages through older chats. The active conversation UUID is kept in the URL so browser refresh can restore it. This is shared single-user history: anyone with access to this deployment can browse the saved conversations.
 
 `GET /v1/conversations?offset=0&limit=20` returns `items` (conversation ID, title, update time, message count) and `next_offset`. `GET /v1/conversations/{conversation_id}` returns completed user/assistant messages with available answer metadata. Titles come from the first user message; opening history makes no model calls. Future answers persist their citations and chunk previews with each assistant message. Older messages remain readable and resumable but may lack source details. Restarting services preserves history as long as the PostgreSQL data volume is retained; no re-ingestion or data migration is needed.

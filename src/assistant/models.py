@@ -84,6 +84,10 @@ class ContextRouteDecision(ContextDecision, RouteDecision):
     """Resolve the latest message and classify the resolved question in one call."""
 
 
+class ContextRepairDecision(ContextRouteDecision):
+    supporting_quotes: list[str]
+
+
 class EvidenceDecision(BaseModel):
     sufficient: bool
     relevant_markers: list[int]
