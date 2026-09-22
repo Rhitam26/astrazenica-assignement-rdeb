@@ -1,141 +1,17 @@
-# """Docling-based structural chunking.
-
-# Uses docling's HybridChunker so chunk boundaries respect the document's
-# actual heading hierarchy (chapter / section / subsection) instead of a
-# fixed character count, and tables are detected and tagged as their own
-# chunk type rather than being split mid-row by a naive text splitter.
-# """
-# from __future__ import annotations
-
-# import hashlib
-# import logging
-# from dataclasses import dataclass, field
-# from pathlib import Path
-
-# import tiktoken
-# from docling.chunking import HybridChunker
-# from docling.document_converter import DocumentConverter
-# from docling_core.transforms.chunker.tokenizer.openai import OpenAITokenizer
-# from docling_core.types.doc.labels import DocItemLabel
-
-# from src.config import get_settings
-
-# logger = logging.getLogger(__name__)
-
-
-# @dataclass
-# class ChunkRecord:
-#     doc_id: str
-#     doc_title: str
-#     chapter_title: str | None
-#     section_title: str | None
-#     subsection_title: str | None
-#     page_number: int | None
-#     content_type: str  # "text" | "table"
-#     chunk_index: int
-#     text: str
-#     token_count: int
-#     content_hash: str = field(init=False)
-
-#     def __post_init__(self) -> None:
-#         # Idempotency key: unchanged text -> unchanged hash -> ingestion skips it.
-#         self.content_hash = hashlib.sha256(self.text.encode("utf-8")).hexdigest()
-
-
-# def _get_tiktoken_encoding(model_name: str) -> tiktoken.Encoding:
-#     try:
-#         return tiktoken.encoding_for_model(model_name)
-#     except KeyError:
-#         # text-embedding-3-* models use cl100k_base; fall back to it safely.
-#         return tiktoken.get_encoding("cl100k_base")
-
-
-# def _classify_content_type(doc_items) -> str:
-#     labels = {item.label for item in doc_items}
-#     if DocItemLabel.TABLE in labels:
-#         return "table"
-#     return "text"
-
-
-# def _heading_levels(headings: list[str]) -> tuple[str | None, str | None, str | None]:
-#     """Docling returns the heading trail outermost-first, e.g.
-#     ["3 Pinecone", "Metadata Filtering"]. Map onto chapter / section /
-#     subsection columns so they're independently filterable in SQL.
-#     """
-#     chapter = headings[0] if len(headings) > 0 else None
-#     section = headings[1] if len(headings) > 1 else None
-#     subsection = headings[2] if len(headings) > 2 else None
-#     return chapter, section, subsection
-
-
-# def chunk_pdf(pdf_path: Path, doc_id: str, doc_title: str) -> list[ChunkRecord]:
-#     """Convert a single PDF and return structurally-aware chunks with metadata."""
-#     settings = get_settings()
-#     encoding = _get_tiktoken_encoding(settings.embedding_model)
-
-#     converter = DocumentConverter()
-#     doc = converter.convert(str(pdf_path)).document
-
-#     tokenizer = OpenAITokenizer(tokenizer=encoding, max_tokens=settings.max_chunk_tokens)
-#     chunker = HybridChunker(tokenizer=tokenizer, merge_peers=True)
-#     raw_chunks = list(chunker.chunk(dl_doc=doc))
-
-#     records: list[ChunkRecord] = []
-#     for idx, chunk in enumerate(raw_chunks):
-#         # contextualize() prefixes the chunk text with its heading trail,
-#         # which measurably improves embedding quality for section-scoped
-#         # content (e.g. a table of numbers means little without its heading).
-#         enriched_text = chunker.contextualize(chunk=chunk)
-
-#         doc_items = chunk.meta.doc_items
-#         content_type = _classify_content_type(doc_items)
-
-#         page_number = None
-#         for item in doc_items:
-#             if item.prov:
-#                 page_number = item.prov[0].page_no
-#                 break
-
-#         chapter, section, subsection = _heading_levels(chunk.meta.headings or [])
-
-#         records.append(
-#             ChunkRecord(
-#                 doc_id=doc_id,
-#                 doc_title=doc_title,
-#                 chapter_title=chapter,
-#                 section_title=section,
-#                 subsection_title=subsection,
-#                 page_number=page_number,
-#                 content_type=content_type,
-#                 chunk_index=idx,
-#                 text=enriched_text,
-#                 token_count=len(encoding.encode(enriched_text)),
-#             )
-#         )
-
-#     table_count = sum(1 for r in records if r.content_type == "table")
-#     logger.info("Chunked %s -> %d chunks (%d table chunks)", pdf_path.name, len(records), table_count)
-#     return records
-
-
-
 from __future__ import annotations
 
 import hashlib
 import logging
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Iterable
 
 import tiktoken
-
 from docling.chunking import HybridChunker
 from docling.document_converter import DocumentConverter
 from docling_core.transforms.chunker.tokenizer.openai import OpenAITokenizer
 from docling_core.types.doc.labels import DocItemLabel
 
-from config import get_settings
-
+from src.shared.config import get_settings
 
 logger = logging.getLogger(__name__)
 
@@ -143,6 +19,7 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 # Data model
 # ---------------------------------------------------------------------------
+
 
 @dataclass
 class ChunkRecord:
@@ -177,14 +54,13 @@ class ChunkRecord:
         """
         Stable content hash used for ingestion idempotency.
         """
-        self.content_hash = hashlib.sha256(
-            self.text.encode("utf-8")
-        ).hexdigest()
+        self.content_hash = hashlib.sha256(self.text.encode("utf-8")).hexdigest()
 
 
 # ---------------------------------------------------------------------------
 # Tokenizer
 # ---------------------------------------------------------------------------
+
 
 def _get_tiktoken_encoding(model_name: str) -> tiktoken.Encoding:
     """
@@ -204,6 +80,7 @@ def _get_tiktoken_encoding(model_name: str) -> tiktoken.Encoding:
 # Heading handling
 # ---------------------------------------------------------------------------
 
+
 def _get_heading_path(chunk) -> list[str]:
     """
     Return the complete heading hierarchy for a chunk.
@@ -221,11 +98,7 @@ def _get_heading_path(chunk) -> list[str]:
     """
     headings = chunk.meta.headings or []
 
-    return [
-        heading.strip()
-        for heading in headings
-        if heading and heading.strip()
-    ]
+    return [heading.strip() for heading in headings if heading and heading.strip()]
 
 
 def _heading_fields(
@@ -250,6 +123,7 @@ def _heading_fields(
 # Provenance / page handling
 # ---------------------------------------------------------------------------
 
+
 def _get_page_numbers(doc_items) -> list[int]:
     """
     Return ALL unique PDF pages represented by the document items
@@ -267,7 +141,7 @@ def _get_page_numbers(doc_items) -> list[int]:
     pages: set[int] = set()
 
     for item in doc_items:
-        for prov in (item.prov or []):
+        for prov in item.prov or []:
             if prov.page_no is not None:
                 pages.add(prov.page_no)
 
@@ -291,6 +165,7 @@ def _get_page_range(
 # Content classification
 # ---------------------------------------------------------------------------
 
+
 def _classify_content_type(doc_items) -> str:
     """
     Identify whether the chunk contains a table.
@@ -298,11 +173,7 @@ def _classify_content_type(doc_items) -> str:
     If any document item is a TABLE, classify the chunk as a table.
     """
 
-    labels = {
-        item.label
-        for item in doc_items
-        if item.label is not None
-    }
+    labels = {item.label for item in doc_items if item.label is not None}
 
     if DocItemLabel.TABLE in labels:
         return "table"
@@ -314,16 +185,13 @@ def _classify_content_type(doc_items) -> str:
 # Table identification
 # ---------------------------------------------------------------------------
 
+
 def _get_table_items(doc_items):
     """
     Return all table items contained in this chunk.
     """
 
-    return [
-        item
-        for item in doc_items
-        if item.label == DocItemLabel.TABLE
-    ]
+    return [item for item in doc_items if item.label == DocItemLabel.TABLE]
 
 
 def _get_table_id(table_item) -> str | None:
@@ -344,6 +212,7 @@ def _get_table_id(table_item) -> str | None:
 # Table serialization
 # ---------------------------------------------------------------------------
 
+
 def _serialize_table(table_item, doc) -> str:
     """
     Serialize a Docling table to Markdown.
@@ -361,6 +230,7 @@ def _serialize_table(table_item, doc) -> str:
 # ---------------------------------------------------------------------------
 # Main chunking function
 # ---------------------------------------------------------------------------
+
 
 def chunk_pdf(
     pdf_path: Path,
@@ -387,9 +257,7 @@ def chunk_pdf(
     # Tokenizer
     # ------------------------------------------------------------
 
-    encoding = _get_tiktoken_encoding(
-        settings.embedding_model
-    )
+    encoding = _get_tiktoken_encoding(settings.embedding_model)
 
     tokenizer = OpenAITokenizer(
         tokenizer=encoding,
@@ -402,9 +270,7 @@ def chunk_pdf(
 
     converter = DocumentConverter()
 
-    conversion_result = converter.convert(
-        str(pdf_path)
-    )
+    conversion_result = converter.convert(str(pdf_path))
 
     doc = conversion_result.document
 
@@ -414,19 +280,15 @@ def chunk_pdf(
 
     chunker = HybridChunker(
         tokenizer=tokenizer,
-
         # Allows compatible neighbouring chunks to be merged.
         merge_peers=True,
-
         # IMPORTANT:
         # If a table is too large for one chunk, repeat its
         # header in subsequent chunks.
         repeat_table_header=True,
     )
 
-    raw_chunks = list(
-        chunker.chunk(dl_doc=doc)
-    )
+    raw_chunks = list(chunker.chunk(dl_doc=doc))
 
     # ------------------------------------------------------------
     # Build ChunkRecords
@@ -435,23 +297,24 @@ def chunk_pdf(
     records: list[ChunkRecord] = []
 
     for idx, chunk in enumerate(raw_chunks):
-
-        doc_items = chunk.meta.doc_items
+        doc_items = chunk.meta.doc_items  # type: ignore[attr-defined]
 
         # --------------------------------------------------------
         # Content type
         # --------------------------------------------------------
 
-        content_type = _classify_content_type(
-            doc_items
-        )
+        content_type = _classify_content_type(doc_items)
 
         # --------------------------------------------------------
         # Complete heading hierarchy
         # --------------------------------------------------------
 
         heading_path = _get_heading_path(chunk)
-        (chapter,section,subsection,) = _heading_fields(heading_path)
+        (
+            chapter,
+            section,
+            subsection,
+        ) = _heading_fields(heading_path)
 
         # --------------------------------------------------------
         # Page provenance
@@ -459,38 +322,33 @@ def chunk_pdf(
 
         page_numbers = _get_page_numbers(doc_items)
 
-        (page_start,page_end,) = _get_page_range(page_numbers)
+        (
+            page_start,
+            page_end,
+        ) = _get_page_range(page_numbers)
 
         # --------------------------------------------------------
         # Table ID
         # --------------------------------------------------------
 
-        table_items = _get_table_items(
-            doc_items
-        )
+        table_items = _get_table_items(doc_items)
 
         table_id = None
 
         if table_items:
-            table_id = _get_table_id(
-                table_items[0]
-            )
+            table_id = _get_table_id(table_items[0])
 
         # --------------------------------------------------------
         # Contextualized text
         # --------------------------------------------------------
 
-        enriched_text = chunker.contextualize(
-            chunk=chunk
-        )
+        enriched_text = chunker.contextualize(chunk=chunk)
 
         # --------------------------------------------------------
         # Token count
         # --------------------------------------------------------
 
-        token_count = len(
-            encoding.encode(enriched_text)
-        )
+        token_count = len(encoding.encode(enriched_text))
 
         # --------------------------------------------------------
         # Record
@@ -500,25 +358,17 @@ def chunk_pdf(
             ChunkRecord(
                 doc_id=doc_id,
                 doc_title=doc_title,
-
                 heading_path=heading_path,
-
                 chapter_title=chapter,
                 section_title=section,
                 subsection_title=subsection,
-
                 page_numbers=page_numbers,
                 page_start=page_start,
                 page_end=page_end,
-
                 content_type=content_type,
-
                 chunk_index=idx,
-
                 text=enriched_text,
-
                 token_count=token_count,
-
                 table_id=table_id,
             )
         )
@@ -527,21 +377,12 @@ def chunk_pdf(
     # Statistics
     # ------------------------------------------------------------
 
-    table_count = sum(
-        1
-        for record in records
-        if record.content_type == "table"
-    )
+    table_count = sum(1 for record in records if record.content_type == "table")
 
-    multi_page_count = sum(
-        1
-        for record in records
-        if len(record.page_numbers) > 1
-    )
+    multi_page_count = sum(1 for record in records if len(record.page_numbers) > 1)
 
     logger.info(
-        "Chunked %s -> %d chunks "
-        "(%d table chunks, %d multi-page chunks)",
+        "Chunked %s -> %d chunks (%d table chunks, %d multi-page chunks)",
         pdf_path.name,
         len(records),
         table_count,

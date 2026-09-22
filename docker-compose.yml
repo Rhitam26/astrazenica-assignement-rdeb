@@ -5,19 +5,105 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-rag_user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-rag_password}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
       POSTGRES_DB: ${POSTGRES_DB:-rag_knowledge_base}
     ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-      # Runs once on an empty data volume to create the schema.
       - ./sql/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-rag_user} -d ${POSTGRES_DB:-rag_knowledge_base}"]
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 5s
       timeout: 5s
       retries: 10
 
+  api:
+    build:
+      context: .
+      target: assistant
+    env_file: .env
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      API_HOST: 0.0.0.0
+      API_PORT: 8000
+    ports:
+      - "127.0.0.1:${API_PORT:-8000}:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/ready', timeout=4)"]
+      interval: 10s
+      timeout: 5s
+      start_period: 30s
+      retries: 10
+
+  ui:
+    build:
+      context: .
+      target: assistant
+    environment:
+      API_BASE_URL: http://api:8000
+      STREAMLIT_BROWSER_GATHER_USAGE_STATS: "false"
+    command: ["streamlit", "run", "src/assistant/ui.py", "--server.address=0.0.0.0", "--server.port=8501"]
+    ports:
+      - "127.0.0.1:8501:8501"
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8501/_stcore/health', timeout=4)"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  ingestion-api:
+    profiles: ["ingestion"]
+    build:
+      context: .
+      target: ingestion
+    env_file: .env
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      INGESTION_UPLOAD_DIR: /app/uploads
+    command: ["sh", "-c", "python -m src.ingestion.migrate && exec uvicorn src.ingestion.api:app --host 0.0.0.0 --port 8001"]
+    ports:
+      - "127.0.0.1:8001:8001"
+    volumes:
+      - ingestion_uploads:/app/uploads
+      - docling_cache:/home/app/.cache
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/ready', timeout=4)"]
+      interval: 10s
+      timeout: 5s
+      start_period: 30s
+      retries: 10
+
+  ingestion-worker:
+    profiles: ["ingestion"]
+    build:
+      context: .
+      target: ingestion
+    env_file: .env
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      INGESTION_UPLOAD_DIR: /app/uploads
+    command: ["python", "-m", "src.ingestion.worker"]
+    volumes:
+      - ingestion_uploads:/app/uploads
+      - docling_cache:/home/app/.cache
+    depends_on:
+      ingestion-api:
+        condition: service_healthy
+
 volumes:
   pgdata:
+  docling_cache:
+  ingestion_uploads:

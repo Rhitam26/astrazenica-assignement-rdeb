@@ -1,0 +1,14 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra -m 'not integration'"
+markers = ["integration: needs TEST_DATABASE_URL pointing to a disposable PostgreSQL database"]
+[tool.ruff]
+line-length = 110
+target-version = "py313"
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+python_version = "3.13"
+ignore_missing_imports = true
+check_untyped_defs = true

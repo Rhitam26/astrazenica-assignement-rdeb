@@ -1,0 +1,8 @@
+[
+  {"id":"definition","turns":[{"message":"Explain HNSW and IVF.","evaluation_question":"Explain HNSW and IVF.","routes":["simple_rag"],"abstained":false,"subjects":["HNSW","IVF"]}]},
+  {"id":"followup","turns":[{"message":"Explain HNSW and IVF.","evaluation_question":"Explain HNSW and IVF.","routes":["simple_rag"],"abstained":false},{"message":"I did not understand, explain with example.","evaluation_question":"Explain HNSW and IVF with simple illustrative examples.","routes":["simple_rag"],"abstained":false,"subjects":["HNSW","IVF"]}]},
+  {"id":"comparison","turns":[{"message":"Compare pgvector and Pinecone.","evaluation_question":"Compare pgvector and Pinecone.","routes":["agentic_rag"],"abstained":false},{"message":"Which one gives me ACID guarantees?","evaluation_question":"Between pgvector and Pinecone, which provides ACID guarantees?","routes":["simple_rag","agentic_rag"],"abstained":false,"subjects":["pgvector","Pinecone"]}]},
+  {"id":"unsupported","turns":[{"message":"Which NVIDIA GPU should I buy? Recommend an exact model and current price.","evaluation_question":"Recommend an exact NVIDIA GPU and current price.","routes":["simple_rag"],"abstained":true}]},
+  {"id":"ambiguous","turns":[{"message":"Which one gives me ACID guarantees?","evaluation_question":"Which one gives me ACID guarantees?","routes":["clarify"],"abstained":false}]},
+  {"id":"greeting","turns":[{"message":"hi","evaluation_question":"Respond to a greeting.","routes":["direct"],"abstained":false}]}
+]
